@@ -15,6 +15,37 @@ const DetailComponent = ({ handleClose, show, article }) => {
     console.log("Article acheté !");
   };
 
+  const productData = {
+    nom: nom,
+    taille: taille,
+    prix: prix,
+    marque:marque,
+    description:description,
+    couleur:couleur,
+    quantite:quantite,
+    saison:saison
+  };
+
+  const productsArray = [];
+
+  axios({
+    method: "post",
+    url: "http://localhost:8888/Backend/ServerSender/retournerProduits",
+    data: productData,
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        productsArray = response.data;
+        console.log(productsArray);
+      } else {
+        
+      }
+    })
+    .catch((error) => {
+      setBackendError(true);
+      setErrorMessage("Duplicate email");
+    });
+  
   return (
     <Modal className="modal-detail" isOpen={show} onRequestClose={handleClose}>
       <h1 onClick={handleClose}>X</h1>
